@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="dimes_16dp">16dp</dimen>
+    <dimen name="dimes_24dp">24dp</dimen>
+    <dimen name="dimes_2dp">2dp</dimen>
+    <dimen name="dimes_8dp">8dp</dimen>
+    <dimen name="dimes_4dp">4dp</dimen>
+    <dimen name="dimes_5dp">5dp</dimen>
+    <dimen name="dimes_6dp">6dp</dimen>
+    <dimen name="dimes_48dp">48dp</dimen>
+    <dimen name="dimes_1dp">1dp</dimen>
+    <dimen name="dimes_328dp">328dp</dimen>
+    <dimen name="dimes_32dp">32dp</dimen>
+    <dimen name="dimes_50dp">50dp</dimen>
+    <dimen name="dimes_200dp">200dp</dimen>
+    <dimen name="dimes_75dp">75dp</dimen>
+
+</resources>

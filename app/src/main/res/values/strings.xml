@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">TestEcommerceApp</string>
+    <string name="empty"> </string>
+
+    <!--empty state-->
+    <string name="empty_screen">Something went wrong..</string>
+    <string name="error_reason">An alien is probably blocking your signal</string>
+    <string name="retry">Retry</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
