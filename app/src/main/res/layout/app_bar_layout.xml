@@ -8,7 +8,7 @@
 
         <variable
                 name="viewModel"
-                type="linkan.a740362.testecommerceapp.base.BaseViewModel"/>
+                type="linkan.a740362.testecommerceapp.ui.activity.main.MainViewModel"/>
     </data>
 
 

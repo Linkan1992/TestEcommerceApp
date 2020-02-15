@@ -28,6 +28,9 @@ class MainViewModel(
 
 
 
+    init {
+        apiHelper.fetchProductData()
+    }
 
     fun setRestaurantList(productList: List<String>) {
 

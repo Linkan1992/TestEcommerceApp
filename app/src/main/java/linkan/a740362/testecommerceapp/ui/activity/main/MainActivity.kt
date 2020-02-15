@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import linkan.a740362.testecommerceapp.databinding.ActivityMainBinding
@@ -76,6 +77,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(){
 
     private fun subscribeLiveData() {
 
+        mainViewModel.mProductLiveData.observe(this, Observer {
+
+            showToast(it.toString())
+
+        })
 
     }
 

@@ -21,7 +21,7 @@
         <!--include appbar-->
         <include android:id="@+id/include_app_bar"
                  layout="@layout/app_bar_layout"
-                 bind:viewModel="@{ (linkan.a740362.testecommerceapp.base.BaseViewModel) viewModel }"/>
+                 bind:viewModel="@{ viewModel }"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/restaurant_layout"
