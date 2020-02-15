@@ -35,14 +35,14 @@ android {
 
         debug {
             minifyEnabled false
-            buildConfigField 'String', 'BASE_URL', "\"https://stark-spire-93433.herokuapp.com/json\""
+            buildConfigField 'String', 'BASE_URL', "\"https://stark-spire-93433.herokuapp.com/\""
         }
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            buildConfigField 'String', 'BASE_URL', "\"https://stark-spire-93433.herokuapp.com/json\""
+            buildConfigField 'String', 'BASE_URL', "\"https://stark-spire-93433.herokuapp.com/\""
         }
 
     }
@@ -86,10 +86,6 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttp3_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp3_version"
 
-    // Rxjava Call Adapter + RxJava
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.rxjavaCallAdapter"
-    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
-    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
 
     // image loading library
     implementation "com.facebook.fresco:fresco:$rootProject.fresco"
