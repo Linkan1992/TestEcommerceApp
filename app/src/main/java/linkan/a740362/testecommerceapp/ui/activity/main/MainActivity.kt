@@ -10,6 +10,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -19,6 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import linkan.a740362.testecommerceapp.databinding.ActivityMainBinding
 
 import javax.inject.Inject
+import androidx.core.view.GravityCompat
+import linkan.a740362.testecommerceapp.ui.fragment.navigationMain.MainNavigationFragment
+
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
@@ -65,7 +69,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         //.. To Hide the home back button
         // supportActionBar?.setDisplayHomeAsUpEnabled(false)
         // supportActionBar?.setDisplayShowHomeEnabled(false)
+        onFragmentAdd(
+            R.id.cl_drawer_container,
+            MainNavigationFragment.newInstance(),
+            MainNavigationFragment.TAG,
+            R.anim.enter_from_left,
+            R.anim.exit_to_left
+        )
 
+        initMainNavFragment()
         setUpCustomDrawer()
         subscribeLiveData()
         setUpRecyclerView()
@@ -73,22 +85,45 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
 
+    private fun initMainNavFragment() {
+
+
+    }
+
     private fun setUpCustomDrawer() {
 
 
-        drawerToggle = ActionBarDrawerToggle(
+        drawerToggle = object : ActionBarDrawerToggle(
             this@MainActivity,
             viewDataBinding.drawerLayout,
             viewDataBinding.includeAppBar.toolbar,
             R.string.drawer_open,
             R.string.drawer_close
-        )
+        ) {
+            override fun onDrawerClosed(view: View) {
 
-      //  viewDataBinding.drawerLayout.setDrawerListener(drawerToggle)
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+
+            }
+
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+
+            }
+
+            override fun onDrawerStateChanged(newState: Int) {
+
+            }
+        }
+
+
+        //  viewDataBinding.drawerLayout.setDrawerListener(drawerToggle)
 
         viewDataBinding.drawerLayout.addDrawerListener(drawerToggle)
 
         drawerToggle.syncState()
+
 
     }
 
@@ -103,6 +138,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     }
 
+    override fun onBackPressed() {
+        if (viewDataBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            viewDataBinding.drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     @SuppressLint("WrongConstant")
     private fun setUpRecyclerView() {
 
@@ -115,6 +158,21 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         mainViewModel.mProductLiveData.observe(this, Observer {
 
             showToast(it.toString())
+
+            mainViewModel.setProductDataList(ArrayList<String>().apply {
+                add("Mens Wear")
+                add("Top wear")
+                add("casuals")
+                add("Electronics")
+                add("Mens Wear")
+                add("Top wear")
+                add("casuals")
+                add("Electronics")
+                add("Mens Wear")
+                add("Top wear")
+                add("casuals")
+                add("Electronics")
+            })
 
         })
 

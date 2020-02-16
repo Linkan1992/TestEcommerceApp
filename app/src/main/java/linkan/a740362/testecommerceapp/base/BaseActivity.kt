@@ -56,7 +56,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : DaggerAppC
     }
 
 
-    fun onFragmentAttached(
+    fun onFragmentAdd(
         @IdRes container_view: Int,
         fragment: Fragment,
         TAG: String,
@@ -73,7 +73,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : DaggerAppC
     }
 
 
-    fun onFragmentDetached(
+    fun onFragmentRemove(
         TAG: String,
         @AnimatorRes @AnimRes EnterAnimation: Int,
         @AnimatorRes @AnimRes ExitAnimation: Int
@@ -88,6 +88,24 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : DaggerAppC
                 .remove(it)
                 .commitNow()
         }
+    }
+
+
+
+    fun onFragmentReplace(
+        @IdRes container_view: Int,
+        fragment: Fragment,
+        TAG: String,
+        @AnimatorRes @AnimRes EnterAnimation: Int,
+        @AnimatorRes @AnimRes ExitAnimation: Int
+    ) {
+        supportFragmentManager
+            .beginTransaction()
+            .disallowAddToBackStack()
+            .setCustomAnimations(EnterAnimation, ExitAnimation)
+            .replace(container_view, fragment, TAG)
+            .commit()
+
     }
 
 

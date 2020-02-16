@@ -25,16 +25,15 @@
                  layout="@layout/app_bar_layout"
                  bind:viewModel="@{ viewModel }"/>
 
-
         <!-- include custom navigation header and custom navigation menu layout-->
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <!--<androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_drawer_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 android:layout_marginEnd="@dimen/dimes_75dp">
 
-            <!--custom navigation header -->
+            &lt;!&ndash;custom navigation header &ndash;&gt;
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_header"
                     android:layout_width="match_parent"
@@ -71,12 +70,13 @@
                         app:layout_constraintTop_toBottomOf="@id/img_profile"
                         app:layout_constraintStart_toStartOf="@id/img_profile"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="@string/app_name"
                         tools:text="Linkan Chauhan"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!--custom navigation menu-->
+            &lt;!&ndash;custom navigation menu&ndash;&gt;
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_navigation_menu"
                     android:layout_width="match_parent"
@@ -87,7 +87,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent">
 
-                <!--vertical main product recylerview layout-->
+                &lt;!&ndash;vertical main product recylerview layout&ndash;&gt;
                 <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/main_product_recyclerView"
                         android:layout_width="match_parent"
@@ -95,7 +95,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
         <!-- Adding progress layout -->
@@ -103,6 +103,16 @@
                 android:id="@+id/included_base_progress_loader"
                 layout="@layout/base_progress_loader"
                 bind:viewModel="@{(linkan.a740362.testecommerceapp.base.BaseViewModel) viewModel}"/>
+
+
+
+        <!-- container for custom navigation header and custom navigation menu layout-->
+        <RelativeLayout
+                android:id="@+id/cl_drawer_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:layout_marginEnd="@dimen/dimes_75dp"/>
 
 
     </androidx.drawerlayout.widget.DrawerLayout>

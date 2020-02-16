@@ -41,4 +41,14 @@ class MainViewModel(
     }
 
 
+
+
+    //------------------- Main Navigation Fragment Click -----------------------
+
+
+
+    //------------------- Child Navigation Fragment Click -----------------------
+
+
+
 }

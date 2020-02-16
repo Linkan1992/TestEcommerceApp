@@ -1,5 +1,6 @@
 package linkan.a740362.testecommerceapp.base
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,9 @@ import androidx.databinding.ViewDataBinding
 import dagger.android.support.DaggerFragment
 
 
-
 abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : DaggerFragment() {
+
+    lateinit var mActivity: BaseActivity<*, *>
 
     lateinit var viewDataBinding: T
         private set
@@ -29,6 +31,15 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : DaggerFrag
         super.onCreate(savedInstanceState)
         mViewModel = viewModel
         setHasOptionsMenu(false)
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        if (context is BaseActivity<*, *>)
+            mActivity = context
+
     }
 
     override fun onCreateView(
