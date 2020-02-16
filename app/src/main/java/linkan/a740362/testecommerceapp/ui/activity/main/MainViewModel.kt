@@ -32,7 +32,7 @@ class MainViewModel(
         apiHelper.fetchProductData()
     }
 
-    fun setRestaurantList(productList: List<String>) {
+    fun setProductDataList(productList: List<String>) {
 
         productDataObservableList.clear()
 
