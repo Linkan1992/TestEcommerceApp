@@ -10,14 +10,16 @@ import linkan.a740362.testecommerceapp.R
 import linkan.a740362.testecommerceapp.ViewModelProviderFactory
 import linkan.a740362.testecommerceapp.base.BaseActivity
 import linkan.a740362.testecommerceapp.base.BaseFragment
+import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.Category
 import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.ProductResponse
 import linkan.a740362.testecommerceapp.data.network.base.Result
 import linkan.a740362.testecommerceapp.databinding.FragProductDetailBinding
 import linkan.a740362.testecommerceapp.ui.activity.main.MainActivity
+import linkan.a740362.testecommerceapp.ui.fragment.productRenderer.FragRendererViewModel
 import linkan.a740362.testecommerceapp.util.AppConstants
 import javax.inject.Inject
 
-class FragProductDetail : BaseFragment<FragProductDetailBinding, ProductDetailViewModel>() {
+class FragProductDetail : BaseFragment<FragProductDetailBinding, FragRendererViewModel>() {
 
     private lateinit var productObj: ProductResponse
 
@@ -43,15 +45,15 @@ class FragProductDetail : BaseFragment<FragProductDetailBinding, ProductDetailVi
     //  @Inject lateinit var mainNavAdapter: MainNavigationAdapter
 
 
-    private val detailViewModel: ProductDetailViewModel by lazy {
-        ViewModelProviders.of(activity!!, viewModelProviderFactory).get(ProductDetailViewModel::class.java)
+    private val detailViewModel: FragRendererViewModel by lazy {
+        ViewModelProviders.of(activity!!, viewModelProviderFactory).get(FragRendererViewModel::class.java)
     }
 
     override val layoutId: Int
         get() = R.layout.frag_product_detail
 
 
-    override val viewModel: ProductDetailViewModel
+    override val viewModel: FragRendererViewModel
         get() = detailViewModel
 
 
@@ -82,7 +84,7 @@ class FragProductDetail : BaseFragment<FragProductDetailBinding, ProductDetailVi
 
     private fun subscribeLiveData() {
 
-        /*rendererViewModel.mRendererLiveData.observe(this@FragProductDetail, Observer { result: Result<Category> ->
+        detailViewModel.mRendererLiveData.observe(this@FragProductDetail, Observer { result: Result<Category> ->
 
             when (result) {
                 is Result.Success -> {
@@ -95,7 +97,7 @@ class FragProductDetail : BaseFragment<FragProductDetailBinding, ProductDetailVi
 
                 }
             }
-        })*/
+        })
 
     }
 
