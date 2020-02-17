@@ -20,6 +20,7 @@ import linkan.a740362.testecommerceapp.databinding.ActivityMainBinding
 
 import javax.inject.Inject
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.ProductDetailResponse
 import linkan.a740362.testecommerceapp.ui.fragment.navigationMain.MainNavigationFragment
 
@@ -142,7 +143,20 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         if (viewDataBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             viewDataBinding.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            //Here we are clearing back stack fragment entries
+            val backStackEntry = supportFragmentManager.backStackEntryCount
+
+            /**
+             * it implies only one fragment was in stack and on backstack main activity
+             * page will get opened
+             */
+            if (backStackEntry == 1)
+                drawerReleaseLockMode()
+
+            if (backStackEntry > 0)
+                supportFragmentManager.popBackStackImmediate()
+            else
+                super.onBackPressed()
         }
     }
 
@@ -160,7 +174,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             when (result) {
                 is Result.Success -> {
 
-                    showToast(result.toString())
+                    // showToast(result.toString())
+
                     mainViewModel.setMainNavDataList(result.data.categories)
 
                 }
@@ -177,5 +192,36 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     }
 
+
+    fun customCloseDrawer() {
+
+        viewDataBinding
+            .drawerLayout
+            .closeDrawer(GravityCompat.START)
+    }
+
+    /**
+     * lock open drawer does not allow to close
+     */
+    fun drawerLockToOpen() {
+
+        viewDataBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN)
+    }
+
+    /**
+     * lock close drawer does not allow to open
+     */
+    fun drawerLockToClose() {
+
+        viewDataBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    }
+
+    /**
+     * unlock drawer which was earlier locked in order to enable it open and close
+     */
+    fun drawerReleaseLockMode() {
+
+        viewDataBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+    }
 
 }

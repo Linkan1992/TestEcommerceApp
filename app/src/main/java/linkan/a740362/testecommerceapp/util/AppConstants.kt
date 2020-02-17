@@ -6,4 +6,8 @@ object AppConstants {
 
   val SUCCESS = "Success"
 
+  val CATEGORY = "category"
+
+  val PRODUCT = "product"
+
 }

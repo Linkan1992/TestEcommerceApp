@@ -8,7 +8,7 @@ import linkan.a740362.testecommerceapp.data.network.base.Result
 
 abstract class BaseViewModel : ViewModel() {
 
-    protected val loading = ObservableBoolean(true);
+    protected val loading = ObservableBoolean(false);
 
     protected val refreshLoader = ObservableBoolean(false);
 

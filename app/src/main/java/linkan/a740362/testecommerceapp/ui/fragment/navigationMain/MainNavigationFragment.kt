@@ -107,7 +107,8 @@ class MainNavigationFragment : BaseFragment<FragmentHomeNavigationBinding, MainV
             when (result) {
                 is Result.Success -> {
 
-                    (activity as BaseActivity<*, *>).showToast(result.toString())
+                  //  (activity as BaseActivity<*, *>).showToast(result.toString())
+
                     mainViewModel.setMainNavDataList(result.data.categories)
 
                 }

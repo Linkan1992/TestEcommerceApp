@@ -54,7 +54,7 @@ class MainNavigationAdapter(data: MutableList<Category>) :
                 model?.let { categoryLiveData.postValue(Result.Success(it)) }
 
 
-                Toast.makeText(itemView.context, "item clicked is $model", Toast.LENGTH_LONG).show()
+               // Toast.makeText(itemView.context, "item clicked is $model", Toast.LENGTH_LONG).show()
 
             }
         }

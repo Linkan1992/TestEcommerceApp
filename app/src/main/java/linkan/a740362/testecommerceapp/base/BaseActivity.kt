@@ -56,6 +56,23 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : DaggerAppC
     }
 
 
+    fun onFragmentAddToBackStack(
+        @IdRes container_view: Int,
+        fragment: Fragment,
+        TAG: String,
+        @AnimatorRes @AnimRes EnterAnimation: Int,
+        @AnimatorRes @AnimRes ExitAnimation: Int
+    ) {
+        supportFragmentManager
+            .beginTransaction()
+            .addToBackStack(TAG)
+            .setCustomAnimations(EnterAnimation, ExitAnimation)
+            .add(container_view, fragment, TAG)
+            .commit()
+
+    }
+
+
     fun onFragmentAdd(
         @IdRes container_view: Int,
         fragment: Fragment,

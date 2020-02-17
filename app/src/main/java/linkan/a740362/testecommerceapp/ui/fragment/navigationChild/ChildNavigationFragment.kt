@@ -15,9 +15,11 @@ import linkan.a740362.testecommerceapp.base.BaseFragment
 import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.Category
 import linkan.a740362.testecommerceapp.data.network.base.Result
 import linkan.a740362.testecommerceapp.databinding.FragmentChildNavigationBinding
+import linkan.a740362.testecommerceapp.ui.activity.main.MainActivity
 import linkan.a740362.testecommerceapp.ui.activity.main.MainViewModel
 import linkan.a740362.testecommerceapp.ui.adapter.childNavigation.ChildNavigationAdapter
 import linkan.a740362.testecommerceapp.ui.fragment.navigationMain.MainNavigationFragment
+import linkan.a740362.testecommerceapp.ui.fragment.productRenderer.FragProductRenderer
 import javax.inject.Inject
 
 class ChildNavigationFragment : BaseFragment<FragmentChildNavigationBinding, MainViewModel>() {
@@ -157,9 +159,23 @@ class ChildNavigationFragment : BaseFragment<FragmentChildNavigationBinding, Mai
                 when (result) {
                     is Result.Success -> {
 
-                        (activity as BaseActivity<*, *>).showToast(result.data.toString())
+                        // (activity as BaseActivity<*, *>).showToast(result.data.toString())
 
-                        replaceMainNavFragment()
+                        /**
+                         * close drawer and lock it at close position
+                         */
+                        (activity as MainActivity).customCloseDrawer()
+                        (activity as MainActivity).drawerLockToClose()
+
+                        (activity as BaseActivity<*, *>).onFragmentAddToBackStack(
+                            R.id.include_app_bar,
+                            FragProductRenderer.newInstance(result.data),
+                            FragProductRenderer.TAG,
+                            R.anim.enter_from_right,
+                            R.anim.exit_to_right
+                        )
+
+                        //replaceMainNavFragment()
                     }
                 }
             })

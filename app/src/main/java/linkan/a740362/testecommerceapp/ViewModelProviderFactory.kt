@@ -9,6 +9,8 @@ import linkan.a740362.testecommerceapp.di.annotation.CoroutineScopeIO
 import linkan.a740362.testecommerceapp.ui.activity.main.MainViewModel
 import linkan.a740362.testecommerceapp.ui.activity.splash.SplashViewModel
 import kotlinx.coroutines.CoroutineScope
+import linkan.a740362.testecommerceapp.ui.fragment.productDetail.ProductDetailViewModel
+import linkan.a740362.testecommerceapp.ui.fragment.productRenderer.FragRendererViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,6 +37,8 @@ constructor(
         return when {
             modelClass.isAssignableFrom(SplashViewModel::class.java) -> SplashViewModel(apiHelper, prefHelper, ioCoroutineScope) as T
             modelClass.isAssignableFrom(MainViewModel::class.java) -> MainViewModel(dbHelper, apiHelper, prefHelper) as T
+            modelClass.isAssignableFrom(FragRendererViewModel::class.java) -> FragRendererViewModel(dbHelper, apiHelper, prefHelper) as T
+            modelClass.isAssignableFrom(ProductDetailViewModel::class.java) -> ProductDetailViewModel(dbHelper, apiHelper, prefHelper) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name} " /*+ modelClass.name*/)
         }
     }

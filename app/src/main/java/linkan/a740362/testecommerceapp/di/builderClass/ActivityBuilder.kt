@@ -8,6 +8,8 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import linkan.a740362.testecommerceapp.ui.fragment.navigationChild.ChildNavFragModuleProvider
 import linkan.a740362.testecommerceapp.ui.fragment.navigationMain.MainNavFragModuleProvider
+import linkan.a740362.testecommerceapp.ui.fragment.productDetail.FragProdDetailModuleProvider
+import linkan.a740362.testecommerceapp.ui.fragment.productRenderer.FragRendererModuleProvider
 
 @Module
 abstract class ActivityBuilder {
@@ -19,7 +21,9 @@ abstract class ActivityBuilder {
         modules = [
             MainActivityModule::class,
             MainNavFragModuleProvider::class,
-            ChildNavFragModuleProvider::class
+            ChildNavFragModuleProvider::class,
+            FragRendererModuleProvider::class,
+            FragProdDetailModuleProvider::class
         ]
     )
     abstract fun provideMainActivity(): MainActivity
