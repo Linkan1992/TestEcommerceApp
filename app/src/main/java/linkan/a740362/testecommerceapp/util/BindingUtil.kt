@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
+import linkan.a740362.testecommerceapp.ui.adapter.childNavigation.ChildNavigationAdapter
 import linkan.a740362.testecommerceapp.ui.adapter.mainNavigation.MainNavigationAdapter
 
 @BindingAdapter("bind:imageUrl")
@@ -33,6 +34,19 @@ fun bindChildAdapter(recyclerView: RecyclerView, childDataList: List<String>) {
 fun bindMainNavigationAdapter(recyclerView: RecyclerView, dataList: List<String>) {
 
     val adapter = recyclerView.adapter as MainNavigationAdapter?
+
+    adapter?.let {
+        it.clearItems()
+        it.addItems(dataList)
+    }
+
+}
+
+
+@BindingAdapter("childNavAdapter")
+fun bindChildNavigationAdapter(recyclerView: RecyclerView, dataList: List<String>) {
+
+    val adapter = recyclerView.adapter as ChildNavigationAdapter?
 
     adapter?.let {
         it.clearItems()

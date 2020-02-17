@@ -1,4 +1,4 @@
-package linkan.a740362.testecommerceapp.ui.adapter.mainNavigation
+package linkan.a740362.testecommerceapp.ui.adapter.childNavigation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,34 +6,33 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import linkan.a740362.testecommerceapp.base.BaseRecyclerViewAdapter
 import linkan.a740362.testecommerceapp.data.network.base.Result
-import linkan.a740362.testecommerceapp.databinding.NavigationRowLayoutBinding
+import linkan.a740362.testecommerceapp.databinding.NavigationChildRowLayoutBinding
 
+class ChildNavigationAdapter(private  val data: ArrayList<String>) :
+    BaseRecyclerViewAdapter<String, ChildNavigationAdapter.ChildNavViewHolder>(data) {
 
-class MainNavigationAdapter(private val data: ArrayList<String>) :
-    BaseRecyclerViewAdapter<String, MainNavigationAdapter.MainNavViewHolder>(data) {
+    private val childCategoryLiveData: MutableLiveData<Result<String>>  by lazy { MutableLiveData<Result<String>>() }
 
-    private val categoryLiveData: MutableLiveData<Result<String>>  by lazy { MutableLiveData<Result<String>>() }
+    val mChildCategoryLiveData: MutableLiveData<Result<String>>
+        get() = childCategoryLiveData
 
-    val mCategoryLiveData: MutableLiveData<Result<String>>
-        get() = categoryLiveData
-
-    override fun mOnCreateViewHolder(parent: ViewGroup, viewType: Int): MainNavViewHolder {
-        return MainNavViewHolder(
-            NavigationRowLayoutBinding.inflate(
+    override fun mOnCreateViewHolder(parent: ViewGroup, viewType: Int): ChildNavViewHolder {
+        return ChildNavViewHolder(
+            NavigationChildRowLayoutBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
     }
 
 
-    inner class MainNavViewHolder(private val mBinding: NavigationRowLayoutBinding) :
-        BaseRecyclerViewAdapter<String, MainNavViewHolder>.BaseViewHolder(mBinding.root) {
+    inner class ChildNavViewHolder(private val mBinding: NavigationChildRowLayoutBinding) :
+        BaseRecyclerViewAdapter<String, ChildNavViewHolder>.BaseViewHolder(mBinding.root) {
 
         override fun onBind(model: String?) {
 
-            val viewModel = MainNavAdapViewModel()
+            val viewModel1 = ChildNavAdapViewModel()
 
-            mBinding.viewModel = viewModel
+            mBinding.viewModel = viewModel1
 
             // Immediate Binding
             // When a variable or observable changes, the binding will be scheduled to change before
@@ -41,14 +40,13 @@ class MainNavigationAdapter(private val data: ArrayList<String>) :
             // To force execution, use the executePendingBindings() method.
             mBinding.executePendingBindings()
 
-
             mBinding.tvCategoryName.text = model
 
             itemView.setOnClickListener {
                 /**
                  * posting the clicked Pojo model
                  */
-                categoryLiveData.postValue(Result.Success(model ?: ""))
+                childCategoryLiveData.postValue(Result.Success(model ?: ""))
 
                 Toast.makeText(itemView.context, "item clicked is $model", Toast.LENGTH_LONG).show()
 

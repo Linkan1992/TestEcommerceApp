@@ -88,6 +88,8 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : DaggerAppC
                 .remove(it)
                 .commitNow()
         }
+
+
     }
 
 

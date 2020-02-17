@@ -3,7 +3,8 @@ package linkan.a740362.testecommerceapp.ui.fragment.navigationMain
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import linkan.a740362.testecommerceapp.data.network.base.Result
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import linkan.a740362.testecommerceapp.base.BaseFragment
 import linkan.a740362.testecommerceapp.databinding.FragmentHomeNavigationBinding
 import linkan.a740362.testecommerceapp.ui.activity.main.MainViewModel
 import linkan.a740362.testecommerceapp.ui.adapter.mainNavigation.MainNavigationAdapter
+import linkan.a740362.testecommerceapp.ui.fragment.navigationChild.ChildNavigationFragment
 import javax.inject.Inject
 
 class MainNavigationFragment : BaseFragment<FragmentHomeNavigationBinding, MainViewModel>() {
@@ -29,11 +31,14 @@ class MainNavigationFragment : BaseFragment<FragmentHomeNavigationBinding, MainV
     }
 
 
-    @Inject lateinit var viewModelProviderFactory: ViewModelProviderFactory
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
 
-    @Inject lateinit var mLayoutManager: LinearLayoutManager
+    @Inject
+    lateinit var mLayoutManager: LinearLayoutManager
 
-    @Inject lateinit var mainNavAdapter : MainNavigationAdapter
+    @Inject
+    lateinit var mainNavAdapter: MainNavigationAdapter
 
 
     private val mainViewModel: MainViewModel by lazy {
@@ -63,11 +68,11 @@ class MainNavigationFragment : BaseFragment<FragmentHomeNavigationBinding, MainV
 
         setUpRecyclerView()
 
-     //   onHomeBackPress()
+        //   onHomeBackPress()
     }
 
 
-    private fun onHomeBackPress(){
+    private fun onHomeBackPress() {
 
         viewDataBinding.heading1.setOnClickListener {
 
@@ -94,7 +99,71 @@ class MainNavigationFragment : BaseFragment<FragmentHomeNavigationBinding, MainV
 
     private fun subscribeLiveData() {
 
+        // main menu nav data
+        mainViewModel.mProductLiveData.observe(this, Observer {
 
+
+            mainViewModel.setMainNavDataList(ArrayList<String>().apply {
+                add("Mens Wear")
+                add("Top wear")
+                add("casuals")
+                add("Electronics")
+                add("Mens Wear")
+                add("Top wear")
+                add("casuals")
+                add("Electronics")
+                add("Mens Wear")
+                add("Top wear")
+                add("casuals")
+                add("Electronics")
+            })
+
+        })
+
+        mainNavAdapter.mCategoryLiveData.observe(this@MainNavigationFragment, Observer { result: Result<String> ->
+
+            when (result) {
+                is Result.Success -> {
+
+                    /**
+                     * replace parent nav menu with child nav menu
+                     */
+                 /*   (activity as BaseActivity<*, *>).onFragmentAdd(
+                        R.id.cl_drawer_container,
+                        ChildNavigationFragment.newInstance(),
+                        ChildNavigationFragment.TAG,
+                        R.anim.enter_from_right,
+                        R.anim.exit_to_left
+                    )
+*/
+
+                    (activity as BaseActivity<*, *>).onFragmentReplace(
+                        R.id.cl_drawer_container,
+                        ChildNavigationFragment.newInstance(),
+                        ChildNavigationFragment.TAG,
+                        R.anim.enter_from_right,
+                        R.anim.exit_to_left
+                    )
+
+
+                    mainViewModel.postChildLiveData(ArrayList<String>().apply {
+                        add("Mens Wear")
+                        add("Top wear")
+                        add("casuals")
+                        add("Electronics")
+                        add("Mens Wear")
+                        add("Top wear")
+                        add("casuals")
+                        add("Electronics")
+                        add("Mens Wear")
+                        add("Top wear")
+                        add("casuals")
+                        add("Electronics")
+                    })
+
+                }
+            }
+        })
 
     }
 

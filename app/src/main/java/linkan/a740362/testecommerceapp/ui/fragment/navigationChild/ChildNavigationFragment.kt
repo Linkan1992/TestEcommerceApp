@@ -3,6 +3,7 @@ package linkan.a740362.testecommerceapp.ui.fragment.navigationChild
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,9 +12,10 @@ import linkan.a740362.testecommerceapp.R
 import linkan.a740362.testecommerceapp.ViewModelProviderFactory
 import linkan.a740362.testecommerceapp.base.BaseActivity
 import linkan.a740362.testecommerceapp.base.BaseFragment
+import linkan.a740362.testecommerceapp.data.network.base.Result
 import linkan.a740362.testecommerceapp.databinding.FragmentChildNavigationBinding
 import linkan.a740362.testecommerceapp.ui.activity.main.MainViewModel
-import linkan.a740362.testecommerceapp.ui.adapter.mainNavigation.MainNavigationAdapter
+import linkan.a740362.testecommerceapp.ui.adapter.childNavigation.ChildNavigationAdapter
 import linkan.a740362.testecommerceapp.ui.fragment.navigationMain.MainNavigationFragment
 import javax.inject.Inject
 
@@ -22,9 +24,9 @@ class ChildNavigationFragment : BaseFragment<FragmentChildNavigationBinding, Mai
 
     companion object {
 
-        val TAG = MainNavigationFragment::class.java.simpleName;
+        val TAG = ChildNavigationFragment::class.java.simpleName;
 
-        fun newInstance() = MainNavigationFragment()
+        fun newInstance() = ChildNavigationFragment()
 
     }
 
@@ -36,7 +38,7 @@ class ChildNavigationFragment : BaseFragment<FragmentChildNavigationBinding, Mai
     lateinit var mLayoutManager: LinearLayoutManager
 
     @Inject
-    lateinit var mainNavAdapter : MainNavigationAdapter
+    lateinit var childNavAdapter: ChildNavigationAdapter
 
 
     private val mainViewModel: MainViewModel by lazy {
@@ -66,12 +68,28 @@ class ChildNavigationFragment : BaseFragment<FragmentChildNavigationBinding, Mai
 
         setUpRecyclerView()
 
-        //   onHomeBackPress()
+        onHomeBackPress()
     }
 
 
-    private fun onHomeBackPress(){
+    private fun onHomeBackPress() {
 
+        viewDataBinding.includedBaseAppBar.imgArrowBack.setOnClickListener {
+
+            /**
+             * replace child nav menu with parent nav menu
+             */
+            /*(activity as BaseActivity<*, *>).onFragmentReplace(
+                R.id.cl_drawer_container,
+                MainNavigationFragment.newInstance(),
+                MainNavigationFragment.TAG,
+                R.anim.enter_from_left,
+                R.anim.exit_to_right
+            )*/
+
+            replaceMainNavFragment()
+
+        }
 
     }
 
@@ -79,10 +97,10 @@ class ChildNavigationFragment : BaseFragment<FragmentChildNavigationBinding, Mai
     @SuppressLint("WrongConstant")
     private fun setUpRecyclerView() {
 
-        /*mLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        viewDataBinding.mainProductRecyclerView.layoutManager = mLayoutManager
-        viewDataBinding.mainProductRecyclerView.itemAnimator = DefaultItemAnimator()
-        viewDataBinding.mainProductRecyclerView.adapter = mainNavAdapter*/
+        mLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        viewDataBinding.childProductRecyclerView.layoutManager = mLayoutManager
+        viewDataBinding.childProductRecyclerView.itemAnimator = DefaultItemAnimator()
+        viewDataBinding.childProductRecyclerView.adapter = childNavAdapter
 
     }
 
@@ -90,6 +108,46 @@ class ChildNavigationFragment : BaseFragment<FragmentChildNavigationBinding, Mai
     private fun subscribeLiveData() {
 
 
+        mainViewModel.mChildNavLiveData.observe(this@ChildNavigationFragment, Observer { result: Result<List<String>> ->
+
+            when (result) {
+                is Result.Success -> {
+
+                    mainViewModel.setChildNavDataList(result.data)
+
+                }
+            }
+        })
+
+
+
+        childNavAdapter.mChildCategoryLiveData.observe(
+            this@ChildNavigationFragment,
+            Observer { result: Result<String> ->
+
+                when (result) {
+                    is Result.Success -> {
+
+                        replaceMainNavFragment()
+                    }
+                }
+            })
+
+    }
+
+
+    private fun replaceMainNavFragment() {
+
+        /**
+         * replace parent nav menu with child nav menu
+         */
+        (activity as BaseActivity<*, *>).onFragmentReplace(
+            R.id.cl_drawer_container,
+            MainNavigationFragment.newInstance(),
+            MainNavigationFragment.TAG,
+            R.anim.enter_from_left,
+            R.anim.exit_to_right
+        )
 
     }
 

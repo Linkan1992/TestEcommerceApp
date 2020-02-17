@@ -74,7 +74,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             MainNavigationFragment.newInstance(),
             MainNavigationFragment.TAG,
             R.anim.enter_from_left,
-            R.anim.exit_to_left
+            R.anim.exit_to_right
         )
 
         initMainNavFragment()
@@ -101,11 +101,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             R.string.drawer_close
         ) {
             override fun onDrawerClosed(view: View) {
-
+                invalidateOptionsMenu()
             }
 
             override fun onDrawerOpened(drawerView: View) {
-
+                invalidateOptionsMenu()
             }
 
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
@@ -159,7 +159,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
             showToast(it.toString())
 
-            mainViewModel.setProductDataList(ArrayList<String>().apply {
+            mainViewModel.setMainNavDataList(ArrayList<String>().apply {
                 add("Mens Wear")
                 add("Top wear")
                 add("casuals")
