@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
+import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.Category
 import linkan.a740362.testecommerceapp.databinding.ConnectionErrorRowLayoutBinding
 
 abstract class BaseRecyclerViewAdapter<T, K : BaseRecyclerViewAdapter<T, K>.BaseViewHolder>(private val data: MutableList<T>) :
@@ -85,6 +86,16 @@ abstract class BaseRecyclerViewAdapter<T, K : BaseRecyclerViewAdapter<T, K>.Base
         notifyDataSetChanged()
     }
 
+    fun itemRangeChanged(
+        startIndex: Int,
+        itemCountChanged: Int,
+        child: List<T>
+    ) {
+        val start = itemCount
+        data.addAll(startIndex, child)
+        notifyItemRangeChanged(start, itemCountChanged)
+    }
+
 
     fun clearItems() {
         data.clear()
@@ -127,7 +138,6 @@ abstract class BaseRecyclerViewAdapter<T, K : BaseRecyclerViewAdapter<T, K>.Base
         }
 
     }
-
 
 
     abstract inner class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

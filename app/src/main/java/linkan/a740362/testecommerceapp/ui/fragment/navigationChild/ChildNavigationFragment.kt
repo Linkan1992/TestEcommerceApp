@@ -12,6 +12,7 @@ import linkan.a740362.testecommerceapp.R
 import linkan.a740362.testecommerceapp.ViewModelProviderFactory
 import linkan.a740362.testecommerceapp.base.BaseActivity
 import linkan.a740362.testecommerceapp.base.BaseFragment
+import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.Category
 import linkan.a740362.testecommerceapp.data.network.base.Result
 import linkan.a740362.testecommerceapp.databinding.FragmentChildNavigationBinding
 import linkan.a740362.testecommerceapp.ui.activity.main.MainViewModel
@@ -108,25 +109,55 @@ class ChildNavigationFragment : BaseFragment<FragmentChildNavigationBinding, Mai
     private fun subscribeLiveData() {
 
 
-        mainViewModel.mChildNavLiveData.observe(this@ChildNavigationFragment, Observer { result: Result<List<String>> ->
+        mainViewModel.mChildNavLiveData.observe(
+            this@ChildNavigationFragment,
+            Observer { result: Result<Category> ->
 
-            when (result) {
-                is Result.Success -> {
+                when (result) {
+                    is Result.Success -> {
 
-                    mainViewModel.setChildNavDataList(result.data)
+                        /*          val flatennedList = ArrayList<Category>()
 
+                                  for (i in 0 until result.data.size) {
+
+                                      val parent = result.data[i]
+
+                                      parent.isParent = true
+
+                                      flatennedList.add(parent)
+
+                                      parent.childCategories?.let { child: List<Category> ->
+
+                                          for (j in 0 until child.size) {
+                                              flatennedList.add(child[j])
+                                          }
+
+                                      }
+
+
+                                  }
+
+
+
+                                  mainViewModel.setChildNavDataList(flatennedList)*/
+
+                        viewDataBinding.includedBaseAppBar.title.text = result.data.name
+
+                        mainViewModel.setChildNavDataList(result.data.childCategories)
+
+                    }
                 }
-            }
-        })
+            })
 
 
 
         childNavAdapter.mChildCategoryLiveData.observe(
-            this@ChildNavigationFragment,
-            Observer { result: Result<String> ->
+            this@ChildNavigationFragment, Observer { result: Result<Category> ->
 
                 when (result) {
                     is Result.Success -> {
+
+                        (activity as BaseActivity<*, *>).showToast(result.data.toString())
 
                         replaceMainNavFragment()
                     }

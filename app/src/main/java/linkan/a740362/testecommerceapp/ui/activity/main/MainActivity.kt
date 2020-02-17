@@ -8,12 +8,11 @@ import linkan.a740362.testecommerceapp.base.BaseActivity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
+import linkan.a740362.testecommerceapp.data.network.base.Result
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +20,7 @@ import linkan.a740362.testecommerceapp.databinding.ActivityMainBinding
 
 import javax.inject.Inject
 import androidx.core.view.GravityCompat
+import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.ProductDetailResponse
 import linkan.a740362.testecommerceapp.ui.fragment.navigationMain.MainNavigationFragment
 
 
@@ -155,24 +155,23 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private fun subscribeLiveData() {
 
-        mainViewModel.mProductLiveData.observe(this, Observer {
+        mainViewModel.mProductLiveData.observe(this, Observer { result: Result<ProductDetailResponse> ->
 
-            showToast(it.toString())
+            when (result) {
+                is Result.Success -> {
 
-            mainViewModel.setMainNavDataList(ArrayList<String>().apply {
-                add("Mens Wear")
-                add("Top wear")
-                add("casuals")
-                add("Electronics")
-                add("Mens Wear")
-                add("Top wear")
-                add("casuals")
-                add("Electronics")
-                add("Mens Wear")
-                add("Top wear")
-                add("casuals")
-                add("Electronics")
-            })
+                    showToast(result.toString())
+                    mainViewModel.setMainNavDataList(result.data.categories)
+
+                }
+
+                is Result.Error -> {
+
+                    showToast(result.message ?: resources.getString(R.string.error_reason))
+
+                }
+            }
+
 
         })
 

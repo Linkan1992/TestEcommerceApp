@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
+import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.Category
 import linkan.a740362.testecommerceapp.ui.adapter.childNavigation.ChildNavigationAdapter
 import linkan.a740362.testecommerceapp.ui.adapter.mainNavigation.MainNavigationAdapter
 
@@ -19,7 +20,6 @@ fun setImageUrl(draweeView: SimpleDraweeView, imageUrl: String?) {
 fun bindParentAdapter(recyclerView: RecyclerView, parentDataList: List<String>) {
 
 
-
 }
 
 
@@ -31,7 +31,7 @@ fun bindChildAdapter(recyclerView: RecyclerView, childDataList: List<String>) {
 
 
 @BindingAdapter("mainNavAdapter")
-fun bindMainNavigationAdapter(recyclerView: RecyclerView, dataList: List<String>) {
+fun bindMainNavigationAdapter(recyclerView: RecyclerView, dataList: List<Category>) {
 
     val adapter = recyclerView.adapter as MainNavigationAdapter?
 
@@ -44,7 +44,7 @@ fun bindMainNavigationAdapter(recyclerView: RecyclerView, dataList: List<String>
 
 
 @BindingAdapter("childNavAdapter")
-fun bindChildNavigationAdapter(recyclerView: RecyclerView, dataList: List<String>) {
+fun bindChildNavigationAdapter(recyclerView: RecyclerView, dataList: List<Category>) {
 
     val adapter = recyclerView.adapter as ChildNavigationAdapter?
 

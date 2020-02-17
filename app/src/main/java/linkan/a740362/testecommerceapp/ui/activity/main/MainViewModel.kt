@@ -7,6 +7,8 @@ import linkan.a740362.testecommerceapp.data.persistence.db.DbHelper
 import linkan.a740362.testecommerceapp.data.persistence.pref.PrefHelper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.Category
+import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.ProductDetailResponse
 import linkan.a740362.testecommerceapp.data.network.base.Result
 
 class MainViewModel(
@@ -16,10 +18,10 @@ class MainViewModel(
 ) : BaseViewModel() {
 
 
-    private val productLiveData: LiveData<Result<String>> =
+    private val productLiveData: LiveData<Result<ProductDetailResponse>> =
         applyResultTransformation(apiHelper.getProductLiveData())
 
-    val mProductLiveData: LiveData<Result<String>>
+    val mProductLiveData: LiveData<Result<ProductDetailResponse>>
         get() = productLiveData
 
 
@@ -31,42 +33,42 @@ class MainViewModel(
     //------------------- Main Navigation Code -----------------------
 
 
-    private val productDataObservableList = ObservableArrayList<String>()
+    private val productDataObservableList = ObservableArrayList<Category>()
 
-    val mProductDataObservableList: ObservableArrayList<String>
+    val mProductDataObservableList: ObservableArrayList<Category>
         get() = productDataObservableList
 
 
-    fun setMainNavDataList(productList: List<String>) {
+    fun setMainNavDataList(productList: List<Category>?) {
 
         productDataObservableList.clear()
 
-        productDataObservableList.addAll(productList)
+        productDataObservableList.addAll(productList ?: ArrayList())
 
     }
 
 
     //------------------- Child Navigation Code -----------------------
 
-    private val childNavDataObservableList = ObservableArrayList<String>()
+    private val childNavDataObservableList = ObservableArrayList<Category>()
 
-    val mChildNavDataObservableList: ObservableArrayList<String>
+    val mChildNavDataObservableList: ObservableArrayList<Category>
         get() = childNavDataObservableList
 
-    private val childNavLiveData: MutableLiveData<Result<List<String>>> by lazy { MutableLiveData<Result<List<String>>>() }
+    private val childNavLiveData: MutableLiveData<Result<Category>> by lazy { MutableLiveData<Result<Category>>() }
 
-    val mChildNavLiveData: LiveData<Result<List<String>>>
+    val mChildNavLiveData: LiveData<Result<Category>>
         get() = childNavLiveData
 
-    fun postChildLiveData(productList: List<String>) {
-        childNavLiveData.postValue(Result.Success(productList))
+    fun postChildLiveData(category: Category) {
+        childNavLiveData.postValue(Result.Success(category))
     }
 
-    fun setChildNavDataList(productList: List<String>) {
+    fun setChildNavDataList(productList: List<Category>?) {
 
         childNavDataObservableList.clear()
 
-        childNavDataObservableList.addAll(productList)
+        childNavDataObservableList.addAll(productList ?: ArrayList())
 
     }
 

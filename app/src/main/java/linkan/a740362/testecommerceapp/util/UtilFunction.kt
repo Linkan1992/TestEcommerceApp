@@ -126,7 +126,7 @@ object UtilFunction {
 
                 for (j in 0 until productArray.length()) {
 
-                    var key = "view_count"
+                    var key = ""
                     var valueCount = 0L
 
                     val productObj = productArray.getJSONObject(j)
@@ -142,10 +142,11 @@ object UtilFunction {
                         key = "shares"
                     }
 
-                    valueCount = productObj.getLong(key)
-
-                    // changing map product object
-                    mapProductObj.put("view_count", valueCount)
+                    if (key.isNotEmpty()) {
+                        valueCount = productObj.getLong(key)
+                        // changing map product object
+                        mapProductObj.put(key, valueCount)
+                    }
 
                     // remove old product object from product array
                     //  productArray.remove(j)

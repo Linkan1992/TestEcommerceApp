@@ -13,6 +13,8 @@ import linkan.a740362.testecommerceapp.R
 import linkan.a740362.testecommerceapp.ViewModelProviderFactory
 import linkan.a740362.testecommerceapp.base.BaseActivity
 import linkan.a740362.testecommerceapp.base.BaseFragment
+import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.Category
+import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.ProductDetailResponse
 import linkan.a740362.testecommerceapp.databinding.FragmentHomeNavigationBinding
 import linkan.a740362.testecommerceapp.ui.activity.main.MainViewModel
 import linkan.a740362.testecommerceapp.ui.adapter.mainNavigation.MainNavigationAdapter
@@ -100,27 +102,26 @@ class MainNavigationFragment : BaseFragment<FragmentHomeNavigationBinding, MainV
     private fun subscribeLiveData() {
 
         // main menu nav data
-        mainViewModel.mProductLiveData.observe(this, Observer {
+        mainViewModel.mProductLiveData.observe(this, Observer { result: Result<ProductDetailResponse> ->
 
+            when (result) {
+                is Result.Success -> {
 
-            mainViewModel.setMainNavDataList(ArrayList<String>().apply {
-                add("Mens Wear")
-                add("Top wear")
-                add("casuals")
-                add("Electronics")
-                add("Mens Wear")
-                add("Top wear")
-                add("casuals")
-                add("Electronics")
-                add("Mens Wear")
-                add("Top wear")
-                add("casuals")
-                add("Electronics")
-            })
+                    (activity as BaseActivity<*, *>).showToast(result.toString())
+                    mainViewModel.setMainNavDataList(result.data.categories)
+
+                }
+
+                is Result.Error -> {
+
+                    (activity as BaseActivity<*, *>).showToast(result.message ?: resources.getString(R.string.error_reason))
+
+                }
+            }
 
         })
 
-        mainNavAdapter.mCategoryLiveData.observe(this@MainNavigationFragment, Observer { result: Result<String> ->
+        mainNavAdapter.mCategoryLiveData.observe(this@MainNavigationFragment, Observer { result: Result<Category> ->
 
             when (result) {
                 is Result.Success -> {
@@ -145,21 +146,7 @@ class MainNavigationFragment : BaseFragment<FragmentHomeNavigationBinding, MainV
                         R.anim.exit_to_left
                     )
 
-
-                    mainViewModel.postChildLiveData(ArrayList<String>().apply {
-                        add("Mens Wear")
-                        add("Top wear")
-                        add("casuals")
-                        add("Electronics")
-                        add("Mens Wear")
-                        add("Top wear")
-                        add("casuals")
-                        add("Electronics")
-                        add("Mens Wear")
-                        add("Top wear")
-                        add("casuals")
-                        add("Electronics")
-                    })
+                    mainViewModel.postChildLiveData(result.data)
 
                 }
             }
