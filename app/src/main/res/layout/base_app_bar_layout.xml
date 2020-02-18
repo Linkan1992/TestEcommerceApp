@@ -57,8 +57,7 @@
                             app:layout_constraintStart_toEndOf="@id/img_arrow_back"
                             app:layout_constraintTop_toTopOf="@id/img_arrow_back"
                             app:layout_constraintBottom_toBottomOf="@id/img_arrow_back"
-                            android:layout_marginStart="@dimen/dimes_16dp"
-                            android:text="@string/home"/>
+                            android:layout_marginStart="@dimen/dimes_16dp"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

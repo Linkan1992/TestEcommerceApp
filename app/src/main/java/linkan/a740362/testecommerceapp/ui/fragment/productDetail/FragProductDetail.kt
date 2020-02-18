@@ -19,7 +19,7 @@ import linkan.a740362.testecommerceapp.ui.fragment.productRenderer.FragRendererV
 import linkan.a740362.testecommerceapp.util.AppConstants
 import javax.inject.Inject
 
-class FragProductDetail : BaseFragment<FragProductDetailBinding, FragRendererViewModel>() {
+class FragProductDetail : BaseFragment<FragProductDetailBinding, ProductDetailViewModel>() {
 
     private lateinit var productObj: ProductResponse
 
@@ -45,15 +45,15 @@ class FragProductDetail : BaseFragment<FragProductDetailBinding, FragRendererVie
     //  @Inject lateinit var mainNavAdapter: MainNavigationAdapter
 
 
-    private val detailViewModel: FragRendererViewModel by lazy {
-        ViewModelProviders.of(activity!!, viewModelProviderFactory).get(FragRendererViewModel::class.java)
+    private val detailViewModel: ProductDetailViewModel by lazy {
+        ViewModelProviders.of(activity!!, viewModelProviderFactory).get(ProductDetailViewModel::class.java)
     }
 
     override val layoutId: Int
         get() = R.layout.frag_product_detail
 
 
-    override val viewModel: FragRendererViewModel
+    override val viewModel: ProductDetailViewModel
         get() = detailViewModel
 
 
@@ -66,7 +66,7 @@ class FragProductDetail : BaseFragment<FragProductDetailBinding, FragRendererVie
         productObj = arguments?.get(AppConstants.PRODUCT) as ProductResponse
 
         // setting data to livedata to simulate as API poll
-        // rendererViewModel.postRendererLiveData(category)
+       //  detailViewModel.postProdDetailLiveData(productObj)
 
         subscribeLiveData()
 
@@ -84,7 +84,7 @@ class FragProductDetail : BaseFragment<FragProductDetailBinding, FragRendererVie
 
     private fun subscribeLiveData() {
 
-        detailViewModel.mRendererLiveData.observe(this@FragProductDetail, Observer { result: Result<Category> ->
+      /*  detailViewModel.mRendererLiveData.observe(this@FragProductDetail, Observer { result: Result<Category> ->
 
             when (result) {
                 is Result.Success -> {
@@ -97,7 +97,7 @@ class FragProductDetail : BaseFragment<FragProductDetailBinding, FragRendererVie
 
                 }
             }
-        })
+        })*/
 
     }
 

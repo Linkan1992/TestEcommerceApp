@@ -41,8 +41,11 @@ constructor(
                     //  UtilFunction.segregateProductCategory(productResponse.data?.string())
                     //  productLiveData.postValue(Result.Success(productResponse.data?.string()))
 
+                    // json with product variant filter
+                    val stringJsonResponse = UtilFunction.filterProductCategory(productResponse.data.string())
 
-                    val stringJsonResponse = UtilFunction.segregateProductCategory(productResponse.data.string())
+                    // json without product variant filter
+                  //  val stringJsonResponse = UtilFunction.segregateProductCategory(productResponse.data.string())
 
                     val categoryResponse : ProductDetailResponse = GsonBuilder().create().fromJson(
                         stringJsonResponse,

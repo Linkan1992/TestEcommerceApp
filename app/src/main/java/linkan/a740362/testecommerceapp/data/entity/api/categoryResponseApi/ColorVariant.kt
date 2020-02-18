@@ -5,31 +5,27 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-data class Variant(
+data class ColorVariant(
 
     @SerializedName("id")
     @Expose
-    val id: Int,
+    val id: Int?,
 
     @SerializedName("color")
     @Expose
-    val color: String,
-
-    @SerializedName("size")
-    @Expose
-    val size: Int?,
+    val color: String?,
 
     @SerializedName("price")
     @Expose
     val price: Int
 
-) : Comparable<Variant>, Serializable {
+) : Comparable<ColorVariant>, Serializable {
 
 
     /**
      * Sorting product variant in ascending order by price
      */
-    override fun compareTo(other: Variant): Int {
+    override fun compareTo(other: ColorVariant): Int {
 
         return when {
             this.price > other.price -> 1

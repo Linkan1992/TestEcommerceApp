@@ -19,8 +19,11 @@ data class ProductResponse(
     @Expose
     val dateAdded: String?,
 
+  /*  @SerializedName("variants")
+    @Expose val variants: List<Variant>?,*/
+
     @SerializedName("variants")
-    @Expose val variants: List<Variant>?,
+    @Expose val variants: List<SizeVariant>?,
 
     @SerializedName("tax")
     @Expose

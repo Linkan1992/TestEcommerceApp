@@ -5,14 +5,16 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 
-data class Tax(
+data class SizeVariant(
 
-    @SerializedName("name")
+    @SerializedName("size")
     @Expose
-    val name: String,
+    val size: Int? = null,
 
-    @SerializedName("value")
+    @SerializedName("color_variant")
     @Expose
-    val value: Double
+    val colorVariant: List<ColorVariant>?
 
 ) : Serializable
+
+

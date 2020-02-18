@@ -10,4 +10,8 @@ object AppConstants {
 
   val PRODUCT = "product"
 
+  val RENDERER_GRID_ROW_COUNT = 2
+
+  val RUPEE_SYMBOL = "₹"
+
 }

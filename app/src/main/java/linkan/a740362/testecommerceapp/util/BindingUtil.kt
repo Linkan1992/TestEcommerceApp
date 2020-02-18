@@ -5,8 +5,10 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.Category
+import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.ProductResponse
 import linkan.a740362.testecommerceapp.ui.adapter.childNavigation.ChildNavigationAdapter
 import linkan.a740362.testecommerceapp.ui.adapter.mainNavigation.MainNavigationAdapter
+import linkan.a740362.testecommerceapp.ui.adapter.productRenderer.ProductRendererAdapter
 
 @BindingAdapter("bind:imageUrl")
 fun setImageUrl(draweeView: SimpleDraweeView, imageUrl: String?) {
@@ -47,6 +49,19 @@ fun bindMainNavigationAdapter(recyclerView: RecyclerView, dataList: List<Categor
 fun bindChildNavigationAdapter(recyclerView: RecyclerView, dataList: List<Category>) {
 
     val adapter = recyclerView.adapter as ChildNavigationAdapter?
+
+    adapter?.let {
+        it.clearItems()
+        it.addItems(dataList)
+    }
+
+}
+
+
+@BindingAdapter("prodRendererAdapter")
+fun bindProdRendererAdapter(recyclerView: RecyclerView, dataList: List<ProductResponse>) {
+
+    val adapter = recyclerView.adapter as ProductRendererAdapter?
 
     adapter?.let {
         it.clearItems()
