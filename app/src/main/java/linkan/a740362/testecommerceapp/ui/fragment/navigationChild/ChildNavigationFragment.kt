@@ -161,10 +161,6 @@ class ChildNavigationFragment : BaseFragment<FragmentChildNavigationBinding, Mai
 
                         // (activity as BaseActivity<*, *>).showToast(result.data.toString())
 
-                        /**
-                         * close drawer and lock it at close position
-                         */
-
                         (activity as BaseActivity<*, *>).onFragmentAddToBackStack(
                             R.id.include_app_bar,
                             FragProductRenderer.newInstance(result.data),
@@ -173,8 +169,13 @@ class ChildNavigationFragment : BaseFragment<FragmentChildNavigationBinding, Mai
                             R.anim.exit_to_right
                         )
 
+
+                        /**
+                         * close drawer and lock it at close position
+                         */
                         (activity as MainActivity).customCloseDrawer()
                         (activity as MainActivity).drawerLockToClose()
+
                         //replaceMainNavFragment()
                     }
                 }

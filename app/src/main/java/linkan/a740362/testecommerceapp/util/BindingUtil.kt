@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.Category
 import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.ProductResponse
+import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.SizeVariant
+import linkan.a740362.testecommerceapp.ui.adapter.variantAdapter.ProductVariantAdapter
 import linkan.a740362.testecommerceapp.ui.adapter.childNavigation.ChildNavigationAdapter
 import linkan.a740362.testecommerceapp.ui.adapter.mainNavigation.MainNavigationAdapter
 import linkan.a740362.testecommerceapp.ui.adapter.productRenderer.ProductRendererAdapter
@@ -62,6 +64,19 @@ fun bindChildNavigationAdapter(recyclerView: RecyclerView, dataList: List<Catego
 fun bindProdRendererAdapter(recyclerView: RecyclerView, dataList: List<ProductResponse>) {
 
     val adapter = recyclerView.adapter as ProductRendererAdapter?
+
+    adapter?.let {
+        it.clearItems()
+        it.addItems(dataList)
+    }
+
+}
+
+
+@BindingAdapter("sizeVariantAdapter")
+fun bindVariantAdapter(recyclerView: RecyclerView, dataList: List<SizeVariant>) {
+
+    val adapter = recyclerView.adapter as ProductVariantAdapter?
 
     adapter?.let {
         it.clearItems()

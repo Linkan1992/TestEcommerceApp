@@ -35,7 +35,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/included_base_app_bar"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:prodRendererAdapter="@{ viewModel.mRendererDataObservableList }"/>
+                app:prodRendererAdapter="@{ viewModel.mRendererDataObservableList }"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

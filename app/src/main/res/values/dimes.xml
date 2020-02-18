@@ -17,6 +17,7 @@
     <dimen name="dimes_1dp">1dp</dimen>
     <dimen name="dimes_328dp">328dp</dimen>
     <dimen name="dimes_32dp">32dp</dimen>
+    <dimen name="dimes_40dp">40dp</dimen>
     <dimen name="dimes_50dp">50dp</dimen>
     <dimen name="dimes_200dp">200dp</dimen>
     <dimen name="dimes_150dp">150dp</dimen>

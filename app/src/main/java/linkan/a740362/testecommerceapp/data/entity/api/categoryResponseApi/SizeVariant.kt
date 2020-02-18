@@ -15,6 +15,22 @@ data class SizeVariant(
     @Expose
     val colorVariant: List<ColorVariant>?
 
-) : Serializable
+) : Comparable<SizeVariant>, Serializable {
+
+
+    /**
+     * Sorting product variant in ascending order by price
+     */
+    override fun compareTo(other: SizeVariant): Int {
+
+        return when {
+            this.size!! > other.size!! -> 1
+            this.size == other.size -> 0
+            else -> -1
+        }
+    }
+
+
+}
 
 
