@@ -1,6 +1,7 @@
 package linkan.a740362.testecommerceapp.di.module
 
 
+import android.app.Application
 import linkan.a740362.testecommerceapp.BuildConfig
 import linkan.a740362.testecommerceapp.data.network.CoroutineApiService
 import com.google.gson.Gson
@@ -8,6 +9,8 @@ import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
+import linkan.a740362.testecommerceapp.util.NetworkUtil.hasNetwork
+import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -23,15 +26,16 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    internal fun provideCoroutineService(retrofit: Retrofit) : CoroutineApiService = createService(retrofit, CoroutineApiService::class.java)
+    internal fun provideCoroutineService(retrofit: Retrofit): CoroutineApiService =
+        createService(retrofit, CoroutineApiService::class.java)
 
 
-    private fun<T> createService(retrofit: Retrofit, clazz : Class<T>) : T =  retrofit.create(clazz)
+    private fun <T> createService(retrofit: Retrofit, clazz: Class<T>): T = retrofit.create(clazz)
 
 
     @Provides
     @Singleton
-    internal fun provideCoroutineRetrofit(okHttpClient: OkHttpClient, gsonConverter : GsonConverterFactory): Retrofit {
+    internal fun provideCoroutineRetrofit(okHttpClient: OkHttpClient, gsonConverter: GsonConverterFactory): Retrofit {
 
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
@@ -42,24 +46,30 @@ class NetworkModule {
     }
 
 
+    @Provides
+    @Singleton
+    internal fun provideOKHttpClient(
+        loggingInterceptor: HttpLoggingInterceptor,
+        headerInterceptor: Interceptor, application: Application
+    ): OkHttpClient {
+
+        return OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .addInterceptor(headerInterceptor)
+            .build()
+    }
+
+
 
     @Provides
     @Singleton
-    internal fun provideOKHttpClient(loggingInterceptor: HttpLoggingInterceptor, headerInterceptor: Interceptor)  : OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor(loggingInterceptor)
-        .addInterceptor(headerInterceptor)
-        .build()
-
-
-    @Provides
-    @Singleton
-    internal fun provideLoggingInt() : HttpLoggingInterceptor {
-            return HttpLoggingInterceptor().apply { level = if (BuildConfig.DEBUG) BODY else NONE }
+    internal fun provideLoggingInt(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply { level = if (BuildConfig.DEBUG) BODY else NONE }
     }
 
     @Provides
     @Singleton
-    internal fun provideHeaderInt() : Interceptor {
+    internal fun provideHeaderInt(): Interceptor {
         return Interceptor { chain ->
             val request = chain.request()
                 .newBuilder()
@@ -72,12 +82,12 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    internal fun provideConverter(gson : Gson) : GsonConverterFactory = GsonConverterFactory.create(gson)
+    internal fun provideConverter(gson: Gson): GsonConverterFactory = GsonConverterFactory.create(gson)
 
 
     @Provides
     @Singleton
-    internal fun provideGson() : Gson = GsonBuilder().create()
+    internal fun provideGson(): Gson = GsonBuilder().create()
 
 
 }

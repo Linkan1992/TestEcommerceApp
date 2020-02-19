@@ -29,6 +29,11 @@ class MainViewModel(
 
 
     init {
+        fetProductDataList()
+    }
+
+
+    fun fetProductDataList(){
         apiHelper.fetchProductData()
     }
 

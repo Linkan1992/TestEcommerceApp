@@ -89,7 +89,7 @@ class FragProductRenderer : BaseFragment<FragProductRendererBinding, FragRendere
     @SuppressLint("WrongConstant")
     private fun setUpRecyclerView() {
 
-        mLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        mLayoutManager.orientation = GridLayoutManager.VERTICAL
         viewDataBinding.rendererProductRecyclerView.layoutManager = mLayoutManager
         viewDataBinding.rendererProductRecyclerView.itemAnimator = DefaultItemAnimator()
         viewDataBinding.rendererProductRecyclerView.adapter = rendererAdapter

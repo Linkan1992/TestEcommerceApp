@@ -13,7 +13,7 @@
                                                        xmlns:fresco="http://schemas.android.com/apk/res-auto"
                                                        xmlns:tools="http://schemas.android.com/tools"
                                                        android:id="@+id/cl_root_render_row"
-                                                       android:layout_width="wrap_content"
+                                                       android:layout_width="match_parent"
                                                        android:layout_height="wrap_content"
                                                        android:foreground="?selectableItemBackground">
 
@@ -35,10 +35,11 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/img_product"
-                android:layout_width="@dimen/dimes_200dp"
+                android:layout_width="@dimen/dimes_0dp"
                 android:layout_height="@dimen/dimes_200dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 fresco:failureImage="@drawable/nointernet_connection"
                 fresco:placeholderImage="@drawable/nointernet_connection"
                 fresco:roundAsCircle="false"

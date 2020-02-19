@@ -6,6 +6,7 @@
     <dimen name="dimes_0_5dp">0.5dp</dimen>
     <dimen name="dimes_16dp">16dp</dimen>
     <dimen name="dimes_24dp">24dp</dimen>
+    <dimen name="dimes_28dp">28dp</dimen>
     <dimen name="dimes_2dp">2dp</dimen>
     <dimen name="dimes_8dp">8dp</dimen>
     <dimen name="dimes_4dp">4dp</dimen>

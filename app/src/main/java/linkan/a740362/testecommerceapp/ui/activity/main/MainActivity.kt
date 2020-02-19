@@ -75,6 +75,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun initOnCreate(savedInstanceState: Bundle?) {
 
+        disableNavigation()
+
         //.. To Hide the home back button
         // supportActionBar?.setDisplayHomeAsUpEnabled(false)
         // supportActionBar?.setDisplayShowHomeEnabled(false)
@@ -175,18 +177,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             .mainProductRecyclerView
 
         mLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        viewDataBinding
-            .includeAppBar
-            .includedContentMain
-            .mainProductRecyclerView.layoutManager = mLayoutManager
-        viewDataBinding
-            .includeAppBar
-            .includedContentMain
-            .mainProductRecyclerView.itemAnimator = DefaultItemAnimator()
-        viewDataBinding
-            .includeAppBar
-            .includedContentMain
-            .mainProductRecyclerView.adapter = parentAdapter
+        recyclerView.layoutManager = mLayoutManager
+        recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.adapter = parentAdapter
 
     }
 
@@ -208,6 +201,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                      */
                     // mainViewModel.setProdRankDataList(result.data.rankings)
 
+                    enableNavigation()
+
                     result.data.rankings?.let {
                         parentAdapter.clearItems()
                         parentAdapter.addItems(it)
@@ -216,9 +211,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 }
 
                 is Result.Error -> {
-
-                    showToast(result.message ?: resources.getString(R.string.error_reason))
-
+                    parentAdapter.setErrorUIVisibility(true)
+                    /**
+                     * Clearing ViewModel empty setEmptyList
+                     */
+                    parentAdapter.clearItems()
+                    parentAdapter.addItems(ArrayList())
+                    //  showToast(result.message ?: resources.getString(R.string.error_reason))
+                    disableNavigation()
                 }
             }
 
@@ -234,7 +234,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
                 is Result.ShowMore -> {
 
-                    showToast(result.toString())
+                    //------------ implement functionality of show more ------------
+                    // showToast(result.toString())
                 }
 
 
@@ -276,12 +277,25 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 }
 
                 is Result.Error -> {
-
                     showToast(result.message ?: resources.getString(R.string.error_reason))
 
                 }
             }
 
+        })
+
+
+        parentAdapter.baseRetryLiveData.observe(this@MainActivity, Observer {
+
+            when (it) {
+
+                is Result.Retry -> {
+
+                    mainViewModel.fetProductDataList()
+
+                }
+
+            }
         })
 
 
@@ -317,6 +331,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     fun drawerReleaseLockMode() {
 
         viewDataBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+    }
+
+    private fun disableNavigation() {
+
+        drawerLockToClose()
+    }
+
+
+    fun enableNavigation() {
+
+        drawerReleaseLockMode()
     }
 
 }

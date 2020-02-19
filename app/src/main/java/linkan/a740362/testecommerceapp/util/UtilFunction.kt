@@ -9,6 +9,8 @@ import java.lang.Exception
 
 object UtilFunction {
 
+    private val colorMap = HashMap<String, String>()
+
     fun segregateProductCategory(originalJson: String): String {
 
 
@@ -233,7 +235,7 @@ object UtilFunction {
 
                         val variantObj = productVariant.getJSONObject(0)
                         val size = variantObj.get("size")
-                      //  val size = variantObj.getInt("size") as Int?
+                        //  val size = variantObj.getInt("size") as Int?
 
                         val jsonObj = flatProductVariantMap.get(size)
 
@@ -386,6 +388,29 @@ object UtilFunction {
             return JSONObject()
         }
 
+    }
+
+
+    fun createColorMap() {
+
+        colorMap.apply {
+            this.put("Blue", "#0000FF")
+            this.put("Red", "#DC143C")
+            this.put("White", "#ffffff")
+            this.put("Black", "#000000")
+            this.put("Yellow", "#FFFF00")
+            this.put("Green", "#008000")
+            this.put("Brown", "#A52A2A")
+            this.put("Silver", "#C0C0C0")
+            this.put("Golden", "#D4AF37")
+            this.put("Grey", "#808080")
+            this.put("Light Blue", "#ADD8E6")
+        }
+
+    }
+
+    fun getHexaDeciColor(key: String?): String {
+        return colorMap.get(key) ?: "#ffffff"
     }
 
 }

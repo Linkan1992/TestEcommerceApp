@@ -56,8 +56,8 @@ class ParentMainAdapter(data: MutableList<ProductRankCategory>) :
             mBinding.executePendingBindings()
 
 
-            // hide button for 3rd row   for testing purpose
-            if (adapterPosition == 3) {
+            // hide button for all row for testing purpose
+            if (adapterPosition > -1) {
                 mBinding.imgActionIcon.visibility = View.GONE
             }
 

@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import android.view.ViewGroup.LayoutParams
 import linkan.a740362.testecommerceapp.R
 import linkan.a740362.testecommerceapp.base.BaseRecyclerViewAdapter
 import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.ProductResponse
@@ -47,9 +48,16 @@ class ProductRendererAdapter(data: MutableList<ProductResponse>) :
             // To force execution, use the executePendingBindings() method.
             mBinding.executePendingBindings()
 
-            if(isLinearLayoutManager){
-
-            }
+            if (isLinearLayoutManager) {
+                val layoutParam = mBinding.clRootRenderRow.layoutParams
+                layoutParam.width = itemView.context.resources.getDimension(R.dimen.dimes_200dp).toInt()
+                mBinding.clRootRenderRow.layoutParams = layoutParam
+            }/* else {
+                // future reference code
+                val layoutParam = mBinding.clRootRenderRow.layoutParams
+                layoutParam.width = LayoutParams.MATCH_PARENT
+                mBinding.clRootRenderRow.layoutParams = layoutParam
+            }*/
 
             //    mBinding.tvProductName.text = model?.name ?: itemView.context.resources.getString(R.string.empty)
 
@@ -73,13 +81,16 @@ class ProductRendererAdapter(data: MutableList<ProductResponse>) :
     }
 
 
-
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
 
-        when (recyclerView.layoutManager) {
-            is LinearLayoutManager -> isLinearLayoutManager = true
-            is GridLayoutManager -> isLinearLayoutManager = false
+        /**
+         * Note GridLayoutManager is Child of LinearLayoutManager
+         */
+        isLinearLayoutManager = when (recyclerView.layoutManager) {
+            is GridLayoutManager -> false
+            is LinearLayoutManager -> true
+            else -> false
         }
     }
 
