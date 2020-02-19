@@ -21,8 +21,13 @@ import linkan.a740362.testecommerceapp.databinding.ActivityMainBinding
 import javax.inject.Inject
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.DefaultItemAnimator
 import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.ProductDetailResponse
+import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.ProductResponse
+import linkan.a740362.testecommerceapp.data.entity.api.rankProductResponse.ProductRankCategory
+import linkan.a740362.testecommerceapp.ui.adapter.homeParentAdapter.ParentMainAdapter
 import linkan.a740362.testecommerceapp.ui.fragment.navigationMain.MainNavigationFragment
+import linkan.a740362.testecommerceapp.ui.fragment.productDetail.FragProductDetail
 
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
@@ -44,6 +49,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     @Inject
     lateinit var mLayoutManager: LinearLayoutManager
+
+    @Inject
+    lateinit var parentAdapter: ParentMainAdapter
 
     private val mainViewModel: MainViewModel by lazy {
         ViewModelProviders.of(this, viewModelProviderFactory).get(MainViewModel::class.java)
@@ -70,13 +78,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         //.. To Hide the home back button
         // supportActionBar?.setDisplayHomeAsUpEnabled(false)
         // supportActionBar?.setDisplayShowHomeEnabled(false)
-        onFragmentAdd(
-            R.id.cl_drawer_container,
-            MainNavigationFragment.newInstance(),
-            MainNavigationFragment.TAG,
-            R.anim.enter_from_left,
-            R.anim.exit_to_right
-        )
 
         initMainNavFragment()
         setUpCustomDrawer()
@@ -87,8 +88,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
 
     private fun initMainNavFragment() {
-
-
+        onFragmentAdd(
+            R.id.cl_drawer_container,
+            MainNavigationFragment.newInstance(),
+            MainNavigationFragment.TAG,
+            R.anim.enter_from_left,
+            R.anim.exit_to_right
+        )
     }
 
     private fun setUpCustomDrawer() {
@@ -163,20 +169,49 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     @SuppressLint("WrongConstant")
     private fun setUpRecyclerView() {
 
+        val recyclerView = viewDataBinding
+            .includeAppBar
+            .includedContentMain
+            .mainProductRecyclerView
+
+        mLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        viewDataBinding
+            .includeAppBar
+            .includedContentMain
+            .mainProductRecyclerView.layoutManager = mLayoutManager
+        viewDataBinding
+            .includeAppBar
+            .includedContentMain
+            .mainProductRecyclerView.itemAnimator = DefaultItemAnimator()
+        viewDataBinding
+            .includeAppBar
+            .includedContentMain
+            .mainProductRecyclerView.adapter = parentAdapter
 
     }
 
 
     private fun subscribeLiveData() {
 
+        /**
+         * livedata to update parent list and navigation menu
+         */
         mainViewModel.mProductLiveData.observe(this, Observer { result: Result<ProductDetailResponse> ->
 
             when (result) {
                 is Result.Success -> {
 
-                    // showToast(result.toString())
+                    /**
+                     * populate home page data
+                     * code is commented since Observable list is not emmiting data
+                     * reason is not identified
+                     */
+                    // mainViewModel.setProdRankDataList(result.data.rankings)
 
-                    mainViewModel.setMainNavDataList(result.data.categories)
+                    result.data.rankings?.let {
+                        parentAdapter.clearItems()
+                        parentAdapter.addItems(it)
+                    }
 
                 }
 
@@ -187,8 +222,68 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 }
             }
 
+        })
+
+
+        /**
+         * livedata to update parentList item click
+         */
+        parentAdapter.mRankingLiveData.observe(this, Observer { result: Result<ProductRankCategory> ->
+
+            when (result) {
+
+                is Result.ShowMore -> {
+
+                    showToast(result.toString())
+                }
+
+
+                is Result.Error -> {
+
+                    showToast(result.message ?: resources.getString(R.string.error_reason))
+
+                }
+            }
 
         })
+
+
+        /**
+         * livedata to update childList item click
+         */
+        parentAdapter.mRankingProductLiveData.observe(this, Observer { result: Result<ProductResponse> ->
+
+            when (result) {
+                is Result.Success -> {
+
+                    /**
+                     * populate product detail page data
+                     */
+                    onFragmentAddToBackStack(
+                        R.id.include_app_bar,
+                        FragProductDetail.newInstance(result.data),
+                        FragProductDetail.TAG,
+                        R.anim.enter_from_right,
+                        R.anim.exit_to_right
+                    )
+
+                    /**
+                     * close drawer and lock it at close position
+                     */
+                    customCloseDrawer()
+                    drawerLockToClose()
+
+                }
+
+                is Result.Error -> {
+
+                    showToast(result.message ?: resources.getString(R.string.error_reason))
+
+                }
+            }
+
+        })
+
 
     }
 

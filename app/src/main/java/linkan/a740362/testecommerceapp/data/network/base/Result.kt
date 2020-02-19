@@ -11,4 +11,6 @@ sealed class Result<out T : Any> {
 
     data class Retry(val isRetry : Boolean = true) : Result<Nothing>()
 
+    data class ShowMore<out T : Any>(val data : T) : Result<T>()
+
 }

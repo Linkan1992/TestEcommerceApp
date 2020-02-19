@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.Category
 import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.ProductDetailResponse
+import linkan.a740362.testecommerceapp.data.entity.api.rankProductResponse.ProductRankCategory
 import linkan.a740362.testecommerceapp.data.network.base.Result
 
 class MainViewModel(
@@ -16,6 +17,8 @@ class MainViewModel(
     private val apiHelper: ApiHelper,
     private val prefHelper: PrefHelper
 ) : BaseViewModel() {
+
+    //----------------------- Home Scroll View Data ----------------------------
 
 
     private val productLiveData: LiveData<Result<ProductDetailResponse>> =
@@ -27,6 +30,23 @@ class MainViewModel(
 
     init {
         apiHelper.fetchProductData()
+    }
+
+
+    //------- Parent Scroll View Data -------
+
+    private val productRankObservableList = ObservableArrayList<ProductRankCategory>()
+
+    val mProductRankObservableList: ObservableArrayList<ProductRankCategory>
+        get() = productRankObservableList
+
+
+    fun setProdRankDataList(productRankList: List<ProductRankCategory>?) {
+
+        productRankObservableList.clear()
+
+        productRankObservableList.addAll(productRankList ?: ArrayList())
+
     }
 
 

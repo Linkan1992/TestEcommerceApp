@@ -22,7 +22,9 @@ abstract class BaseRecyclerViewAdapter<T, K : BaseRecyclerViewAdapter<T, K>.Base
 
         private val VIEW_TYPE_NORMAL = 1
 
-        val VIEW_TYPE_SEARCH = 2
+        val VIEW_TYPE_GRID = 3
+
+        val VIEW_TYPE_LINEAR = 4
     }
 
 

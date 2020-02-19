@@ -68,12 +68,7 @@
                             android:background="@color/bg_color"
                             fresco:failureImage="@drawable/nointernet_connection"
                             fresco:placeholderImage="@drawable/nointernet_connection"
-                            fresco:roundAsCircle="true"
-                            fresco:roundedCornerRadius="@dimen/dimes_8dp"
-                            fresco:roundTopLeft="true"
-                            fresco:roundTopRight="true"
-                            fresco:roundBottomLeft="true"
-                            fresco:roundBottomRight="true"/>
+                            fresco:roundAsCircle="false"/>
 
 
                     <TextView

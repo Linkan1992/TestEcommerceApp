@@ -7,8 +7,10 @@ import com.facebook.drawee.view.SimpleDraweeView
 import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.Category
 import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.ProductResponse
 import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.SizeVariant
+import linkan.a740362.testecommerceapp.data.entity.api.rankProductResponse.ProductRankCategory
 import linkan.a740362.testecommerceapp.ui.adapter.variantAdapter.ProductVariantAdapter
 import linkan.a740362.testecommerceapp.ui.adapter.childNavigation.ChildNavigationAdapter
+import linkan.a740362.testecommerceapp.ui.adapter.homeParentAdapter.ParentMainAdapter
 import linkan.a740362.testecommerceapp.ui.adapter.mainNavigation.MainNavigationAdapter
 import linkan.a740362.testecommerceapp.ui.adapter.productRenderer.ProductRendererAdapter
 
@@ -21,8 +23,14 @@ fun setImageUrl(draweeView: SimpleDraweeView, imageUrl: String?) {
 
 
 @BindingAdapter("parentAdapter")
-fun bindParentAdapter(recyclerView: RecyclerView, parentDataList: List<String>) {
+fun bindParentAdapter(recyclerView: RecyclerView, parentDataList: List<ProductRankCategory>?) {
 
+    val adapter = recyclerView.adapter as ParentMainAdapter?
+
+    adapter?.let {
+        it.clearItems()
+        it.addItems(parentDataList ?: ArrayList())
+    }
 
 }
 

@@ -94,7 +94,8 @@ class ChildNavigationAdapter(private val dataList: MutableList<Category>) :
             }).apply {
                 /**
                  * Single source LiveData is binded to nested multiple child live data
-                 * hence need to use Mediator Live Data since all will be observed
+                 * hence need to use Mediator Live Data since data will be observed
+                 * if any one changes means clicked
                  */
                 childCategoryLiveData.addSource(this.mChild2CategoryLiveData) {
                     childCategoryLiveData.postValue(it)

@@ -3,6 +3,7 @@ package linkan.a740362.testecommerceapp.ui.adapter.mainNavigation
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import linkan.a740362.testecommerceapp.R
 import linkan.a740362.testecommerceapp.base.BaseRecyclerViewAdapter
@@ -16,7 +17,7 @@ class MainNavigationAdapter(data: MutableList<Category>) :
 
     private val categoryLiveData: MutableLiveData<Result<Category>>  by lazy { MutableLiveData<Result<Category>>() }
 
-    val mCategoryLiveData: MutableLiveData<Result<Category>>
+    val mCategoryLiveData: LiveData<Result<Category>>
         get() = categoryLiveData
 
     override fun mOnCreateViewHolder(parent: ViewGroup, viewType: Int): MainNavViewHolder {

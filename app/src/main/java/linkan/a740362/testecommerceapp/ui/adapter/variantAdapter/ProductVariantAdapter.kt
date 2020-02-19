@@ -3,6 +3,7 @@ package linkan.a740362.testecommerceapp.ui.adapter.variantAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import linkan.a740362.testecommerceapp.base.BaseRecyclerViewAdapter
 import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.SizeVariant
@@ -16,7 +17,7 @@ class ProductVariantAdapter(data: MutableList<SizeVariant>) :
 
     private val variantLiveData: MutableLiveData<Result<SizeVariant>>  by lazy { MutableLiveData<Result<SizeVariant>>() }
 
-    val mVariantLiveData: MutableLiveData<Result<SizeVariant>>
+    val mVariantLiveData: LiveData<Result<SizeVariant>>
         get() = variantLiveData
 
     override fun mOnCreateViewHolder(parent: ViewGroup, viewType: Int): ProdVariantViewHolder {

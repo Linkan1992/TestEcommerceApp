@@ -2,7 +2,12 @@ package linkan.a740362.testecommerceapp.ui.adapter.productRenderer
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import linkan.a740362.testecommerceapp.R
 import linkan.a740362.testecommerceapp.base.BaseRecyclerViewAdapter
 import linkan.a740362.testecommerceapp.data.entity.api.categoryResponseApi.ProductResponse
 import linkan.a740362.testecommerceapp.data.network.base.Result
@@ -11,9 +16,11 @@ import linkan.a740362.testecommerceapp.databinding.RenderProductRowLayoutBinding
 class ProductRendererAdapter(data: MutableList<ProductResponse>) :
     BaseRecyclerViewAdapter<ProductResponse, ProductRendererAdapter.ProdRendererViewHolder>(data) {
 
+    private var isLinearLayoutManager = false
+
     private val productDetailLiveData: MutableLiveData<Result<ProductResponse>>  by lazy { MutableLiveData<Result<ProductResponse>>() }
 
-    val mProductDetailLiveData: MutableLiveData<Result<ProductResponse>>
+    val mProductDetailLiveData: LiveData<Result<ProductResponse>>
         get() = productDetailLiveData
 
     override fun mOnCreateViewHolder(parent: ViewGroup, viewType: Int): ProdRendererViewHolder {
@@ -40,8 +47,11 @@ class ProductRendererAdapter(data: MutableList<ProductResponse>) :
             // To force execution, use the executePendingBindings() method.
             mBinding.executePendingBindings()
 
+            if(isLinearLayoutManager){
 
-        //    mBinding.tvProductName.text = model?.name ?: itemView.context.resources.getString(R.string.empty)
+            }
+
+            //    mBinding.tvProductName.text = model?.name ?: itemView.context.resources.getString(R.string.empty)
 
             itemView.setOnClickListener {
                 /**
@@ -60,6 +70,17 @@ class ProductRendererAdapter(data: MutableList<ProductResponse>) :
 
         }
 
+    }
+
+
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+
+        when (recyclerView.layoutManager) {
+            is LinearLayoutManager -> isLinearLayoutManager = true
+            is GridLayoutManager -> isLinearLayoutManager = false
+        }
     }
 
 }

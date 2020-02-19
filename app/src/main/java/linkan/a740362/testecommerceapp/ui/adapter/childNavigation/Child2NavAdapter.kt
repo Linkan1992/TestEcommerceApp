@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import linkan.a740362.testecommerceapp.R
 import linkan.a740362.testecommerceapp.base.BaseRecyclerViewAdapter
@@ -18,7 +19,7 @@ class Child2NavAdapter(private val dataList: MutableList<Category>) :
 
     private val child2CategoryLiveData: MutableLiveData<Result<Category>>  by lazy { MutableLiveData<Result<Category>>() }
 
-    val mChild2CategoryLiveData: MutableLiveData<Result<Category>>
+    val mChild2CategoryLiveData: LiveData<Result<Category>>
         get() = child2CategoryLiveData
 
     override fun mOnCreateViewHolder(parent: ViewGroup, viewType: Int): Child2NavViewHolder {
